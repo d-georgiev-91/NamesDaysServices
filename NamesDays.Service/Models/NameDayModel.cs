@@ -16,7 +16,7 @@
         [DataMember(Name = "date")]
         public DateTime Date { get; set; }
 
-        [DataMember(Name = "Names")]
+        [DataMember(Name = "names")]
         public IEnumerable<NameModel> Names { get; set; }
 
         public static Expression<Func<NamesDay, NameDayModel>> FromNameDay
