@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NamesDaysModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="NamesDaysModelStoreContainer">
+          <EntitySet Name="Names" EntityType="NamesDaysModel.Store.Names" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NamesDays" EntityType="NamesDaysModel.Store.NamesDays" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Names_NamesDays" Association="NamesDaysModel.Store.FK_Names_NamesDays">
+            <End Role="NamesDays" EntitySet="NamesDays" />
+            <End Role="Names" EntitySet="Names" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Names">
+          <Key>
+            <PropertyRef Name="NameId" />
+          </Key>
+          <Property Name="NameId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="DayId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NamesDays">
+          <Key>
+            <PropertyRef Name="NameDayId" />
+          </Key>
+          <Property Name="NameDayId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NameDayDate" Type="date" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Names_NamesDays">
+          <End Role="NamesDays" Type="NamesDaysModel.Store.NamesDays" Multiplicity="1" />
+          <End Role="Names" Type="NamesDaysModel.Store.Names" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NamesDays">
+              <PropertyRef Name="NameDayId" />
+            </Principal>
+            <Dependent Role="Names">
+              <PropertyRef Name="DayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NamesDaysModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NamesDaysEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Names" EntityType="NamesDaysModel.Name" />
+          <EntitySet Name="NamesDays" EntityType="NamesDaysModel.NamesDay" />
+          <AssociationSet Name="FK_Names_NamesDays" Association="NamesDaysModel.FK_Names_NamesDays">
+            <End Role="NamesDays" EntitySet="NamesDays" />
+            <End Role="Names" EntitySet="Names" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Name">
+          <Key>
+            <PropertyRef Name="NameId" />
+          </Key>
+          <Property Name="NameId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name1" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="DayId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NamesDay" Relationship="NamesDaysModel.FK_Names_NamesDays" FromRole="Names" ToRole="NamesDays" />
+        </EntityType>
+        <EntityType Name="NamesDay">
+          <Key>
+            <PropertyRef Name="NameDayId" />
+          </Key>
+          <Property Name="NameDayId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="NameDayDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Names" Relationship="NamesDaysModel.FK_Names_NamesDays" FromRole="NamesDays" ToRole="Names" />
+        </EntityType>
+        <Association Name="FK_Names_NamesDays">
+          <End Role="NamesDays" Type="NamesDaysModel.NamesDay" Multiplicity="1" />
+          <End Role="Names" Type="NamesDaysModel.Name" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NamesDays">
+              <PropertyRef Name="NameDayId" />
+            </Principal>
+            <Dependent Role="Names">
+              <PropertyRef Name="DayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NamesDaysModelStoreContainer" CdmEntityContainer="NamesDaysEntities">
+          <EntitySetMapping Name="Names">
+            <EntityTypeMapping TypeName="NamesDaysModel.Name">
+              <MappingFragment StoreEntitySet="Names">
+                <ScalarProperty Name="NameId" ColumnName="NameId" />
+                <ScalarProperty Name="Name1" ColumnName="Name" />
+                <ScalarProperty Name="DayId" ColumnName="DayId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NamesDays">
+            <EntityTypeMapping TypeName="NamesDaysModel.NamesDay">
+              <MappingFragment StoreEntitySet="NamesDays">
+                <ScalarProperty Name="NameDayId" ColumnName="NameDayId" />
+                <ScalarProperty Name="NameDayDate" ColumnName="NameDayDate" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
